@@ -1,0 +1,35 @@
+{
+    "language": "ja",
+    "title": "B-NET API Document",
+    "plugins": ["theme-api","hints","tabs2","api-mod","sharing","back-to-top-button","intopic-toc","block-code","-sharing","hide-published-with"],
+    "pluginsConfig": {
+        "api-mod": {
+          "expanded": false
+        },
+        "intopic-toc": {
+          "selector": ".markdown-section h1, .markdown-section h2, .markdown-section h3, .markdown-section h4, .markdown-section h5, .markdown-section h6",
+          "mode": "nested",
+          "maxDepth": 1,
+          "isCollapsed": false,
+          "isScrollspyActive": true,
+          "visible": true
+        },
+        "block-code": {
+          "cloneButton": true,
+          "lineNumber": false,
+          "cloneButtonStyle": {
+            "color": "#c1c7cd",
+            "color-hover": "#c1c7cd",
+            "bg": "transparent",
+            "bg-hover": "transparent"
+          },
+          "cloneButtonIcon": {
+            "clone": "fa-clone",
+            "check": "fa-check"
+          }
+        }
+    },
+    "styles": {
+      "website": "styles/website.css"
+  }
+}

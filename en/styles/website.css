@@ -1,0 +1,24 @@
+.book.two-columns .api-method {
+    position: relative;
+    /* width: calc(100% + 60px); */
+}
+
+.api-method {
+    margin: 0px -0px;
+}
+
+nav.intopic-toc {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    flex-direction: column;
+    width: 20%;
+    margin: 0 15px 5px 0;
+    padding-top: 60px;
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+    list-style: none;
+}
