@@ -21,9 +21,9 @@ https://localhost/b-net/api/v1/palette/threads
 
 ### Request Headers:
 
-| Header        | Description                        |
-| :------------ | :--------------------------------- |
-| authorization | API key set in B-NET Config.       |
+| Header        | Description                                    |
+| :------------ | :--------------------------------------------- |
+| authorization | API key for authorization. Set in BNET Config. |
 
 ### Request Body:
 
@@ -126,9 +126,9 @@ https://localhost/b-net/api/v1/palette/threads?filter:rgb=%23FFFFFF
 
 ### Request Headers:
 
-| Header        | Description                        |
-| :------------ | :--------------------------------- |
-| authorization | API key set in B-NET Config.       |
+| Header        | Description                                    |
+| :------------ | :--------------------------------------------- |
+| authorization | API key for authorization. Set in BNET Config. |
 
 ### Request Body:
 
@@ -207,9 +207,9 @@ https://localhost/b-net/api/v1/palette/threads?palette_id=12345
 
 ### Request Headers:
 
-| Header        | Description                        |
-| :------------ | :--------------------------------- |
-| authorization | API key set in B-NET Config.       |
+| Header        | Description                                    |
+| :------------ | :--------------------------------------------- |
+| authorization | API key for authorization. Set in BNET Config. |
 
 ### Request Body:
 
