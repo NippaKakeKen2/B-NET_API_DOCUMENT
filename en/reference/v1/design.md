@@ -45,9 +45,9 @@ https://localhost/b-net/api/v1/design?file_name=ABC&colors={"needles":[1,2,3]}
 
 ### Request Headers:
 
-| Header        | Description                        |
-| :------------ | :--------------------------------- |
-| authorization | API key set in B-NET Config.       |
+| Header        | Description                                    |
+| :------------ | :--------------------------------------------- |
+| authorization | API key for authorization. Set in BNET Config. |
 
 ### Request Body:
 
@@ -101,9 +101,9 @@ https://localhost/b-net/api/v1/design/info?file_name=ZZ
 
 ### Request Headers:
 
-| Header        | Description                        |
-| :------------ | :--------------------------------- |
-| authorization | API key set in B-NET Config.       |
+| Header        | Description                                    |
+| :------------ | :--------------------------------------------- |
+| authorization | API key for authorization. Set in BNET Config. |
 
 ### Request Body:
 
@@ -181,9 +181,9 @@ https://localhost/b-net/api/v1/design/upload?file_name=ABC.DST&folder=temp
 
 ### Request Headers:
 
-| Header        | Description                        |
-| :------------ | :--------------------------------- |
-| authorization | API key set in B-NET Config.       |
+| Header        | Description                                    |
+| :------------ | :--------------------------------------------- |
+| authorization | API key for authorization. Set in BNET Config. |
 
 ### Request Body:
 

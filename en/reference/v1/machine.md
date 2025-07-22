@@ -22,13 +22,13 @@ https://localhost/b-net/api/v1/machine/status?filter:machine_id=M001
 
 ### Query Parameters:
 
-| Name     | Type    | Description                                                                                                                                                                          |
-| :------- | :------ | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| per_page | Integer | (Optional) The number of machines values to return (page_size). If blank, all machines will be returned.                                                                             |
-| page     | Integer | Optional offset If "per_page" is not blank. Starting value is 1. If ommitted, then the 1st page will be returned. For example, if per_page=10 and page=1, the 1st-10th machine's status will be returned. For page=2, machines 11-20 will be returned. |
-| fields   | String  | List of fields to return. (optional) If not specified, all information will be returned. Multiple fields can be seperated by a comma. Uses field names as specified below. Example: "machineid,jcode". |
+| Name     | Type    | Description                                                                                                                                                                                                                                                                                                                                                      |
+| :------- | :------ | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| per_page | Integer | (Optional) The number of machines values to return (page_size). If blank, all machines will be returned.                                                                                                                                                                                                                                                         |
+| page     | Integer | Optional offset If "per_page" is not blank. Starting value is 1. If ommitted, then the 1st page will be returned. For example, if per_page=10 and page=1, the 1st-10th machine's status will be returned. For page=2, machines 11-20 will be returned.                                                                                                           |
+| fields   | String  | List of fields to return. (optional) If not specified, all information will be returned. Multiple fields can be seperated by a comma. Uses field names as specified below. Example: "machineid,jcode".                                                                                                                                                           |
 | order    | String  | Option to specify Sort Order for returned data. Can specify ASC (default) or DESC order, and multiple criteria. For example, "order = needle ASC, machineid DESC." Field names listed below  However, groupid, groupname cannot be used. The defualt sort order is "machineid ASC". Also note that some filters have comparison operators (exclude, more, less). |
-| filter   | String  | Option to filter the data to be returned, based on the values in the returned fields. Some wildcards are available for pattern matchine. For example, "filter:machine_id=M%&needle=9" will return status of all 9 needle machines whose ID starts with M. The table of fileds below lists the filter information. |
+| filter   | String  | Option to filter the data to be returned, based on the values in the returned fields. Some wildcards are available for pattern matchine. For example, "filter:machine_id=M%&needle=9" will return status of all 9 needle machines whose ID starts with M. The table of fileds below lists the filter information.                                                |
 
 
 ### Filter:
@@ -94,25 +94,25 @@ https://localhost/b-net/api/v1/machine/status?filter:machine_id=M001
 
 | Name                   | Type    | Description                                          |
 | :--------------------- | :------ | :--------------------------------------------------- |
-| machineid             | String  | The Embroidery machine ID.                           |
+| machineid              | String  | The Embroidery machine ID.                           |
 | model                  | String  | The model name.                                      |
-| operatorid            | String  | The operator ID.                                     |
-| operatorname          | String  | The operator name.                                   |
+| operatorid             | String  | The operator ID.                                     |
+| operatorname           | String  | The operator name.                                   |
 | head                   | Integer | The number of heads.                                 |
-| effectivehead         | Integer | The number of effective heads.                       |
-| errorheadtext        | String  | The error head position.                             |
+| effectivehead          | Integer | The number of effective heads.                       |
+| errorheadtext          | String  | The error head position.                             |
 | needle                 | Integer | The number of needle bars.                           |
-| designname            | String  | The pattern name.                                    |
-| designfullname       | String  | The full path of the pattern.                        |
-| totalstitchcount     | String  | The total number of stitches on the pattern.         |
-| sewingspeed           | Integer | Current machine speed.                               |
-| machinesewingspeed   | Integer | Machine set embroidery speed.                        |
+| designname             | String  | The pattern name.                                    |
+| designfullname         | String  | The full path of the pattern.                        |
+| totalstitchcount       | String  | The total number of stitches on the pattern.         |
+| sewingspeed            | Integer | Current machine speed.                               |
+| machinesewingspeed     | Integer | Machine set embroidery speed.                        |
 | jcode                  | String  | The status code.                                     |
-| jcodealternativetext | String  | Description of the status code.                      |
-| currentstitchcount   | Integer | Current Stitch Number.                               |
-| remainingtime         | String  | Amount of time left (estimated).                     |
-| groupid               | String  | Group ID.                                            |
-| groupname             | String  | The group name.                                      |
+| jcodealternativetext   | String  | Description of the status code.                      |
+| currentstitchcount     | Integer | Current Stitch Number.                               |
+| remainingtime          | String  | Amount of time left (estimated).                     |
+| groupid                | String  | Group ID.                                            |
+| groupname              | String  | The group name.                                      |
 
 ### Errors:
 
@@ -147,19 +147,19 @@ https://localhost/b-net/api/v1/machine/schedule?machine_id=M001&file_name=ABC&co
 ### Query Parameters:
 
 
-| Name       | Type   | Description                                                            |
-| :--------- | :----- | :--------------------------------------------------------------------- |
-| machine_id | String | ID of the target embroidery machine (pattern matching not available).  |
-| file_name  | String | Filename of stitch file on server, with no path or extension.          |
-| colors     | JSON   | Color Change Information- a JSON array of needles.                     |
-| output_name | String | New file name at output.                   |
-| job | String | Write to the job table (t_jobs). <br>none：Nothing.<br>add：Add to the job table.  |
+| Name        | Type   | Description                                                                       |
+| :---------- | :----- | :-------------------------------------------------------------------------------- |
+| machine_id  | String | ID of the target embroidery machine (pattern matching not available).             |
+| file_name   | String | Filename of stitch file on server, with no path or extension.                     |
+| colors      | JSON   | Color Change Information- a JSON array of needles.                                |
+| output_name | String | New file name at output.                                                          |
+| job         | String | Write to the job table (t_jobs). <br>none：Nothing.<br>add：Add to the job table. |
 
 ### Request Headers:
 
-| Header        | Description                        |
-| :------------ | :--------------------------------- |
-| authorization | API key set in B-NET Config.       |
+| Header        | Description                                    |
+| :------------ | :--------------------------------------------- |
+| authorization | API key for authorization. Set in BNET Config. |
 
 ### Request Body:
 
@@ -214,7 +214,7 @@ https://localhost/b-net/api/v1/machine/schedule
 
 | Header        | Description                        |
 | :------------ | :--------------------------------- |
-| authorization | API key set in B-NET Config.       |
+| authorization | API key for authorization. Set in BNET Config. |
 
 ### Request Body:
 
@@ -269,7 +269,7 @@ https://localhost/b-net/api/v1/machine/schedule/design/?machine_id=M001&schedule
 
 | Header        | Description                        |
 | :------------ | :--------------------------------- |
-| authorization | API key set in B-NET Config.       |
+| authorization | API key for authorization. Set in BNET Config. |
 
 ### Request Body:
 
@@ -344,9 +344,9 @@ https://localhost/b-net/api/v1/machine/job?machine_id=M001&file_name=FLOWER
 
 ### Request Headers:
 
-| Header        | Description                        |
-| :------------ | :--------------------------------- |
-| authorization | API key set in B-NET Config.       |
+| Header        | Description                                    |
+| :------------ | :--------------------------------------------- |
+| authorization | API key for authorization. Set in BNET Config. |
 
 ### Request Body:
 
@@ -472,9 +472,9 @@ https://localhost/b-net/api/v1/machine/threads?machine_id=M001
 
 ### Request Headers:
 
-| Header        | Description                        |
-| :------------ | :--------------------------------- |
-| authorization | API key set in B-NET Config.       |
+| Header        | Description                                    |
+| :------------ | :--------------------------------------------- |
+| authorization | API key for authorization. Set in BNET Config. |
 
 ### Request Body:
 
@@ -576,9 +576,9 @@ https://localhost/b-net/api/v1/machine/threads?machine_id=M001&filter:needle_num
 
 ### Request Headers:
 
-| Header        | Description                        |
-| :------------ | :--------------------------------- |
-| authorization | API key set in B-NET Config.       |
+| Header        | Description                                    |
+| :------------ | :--------------------------------------------- |
+| authorization | API key for authorization. Set in BNET Config. |
 
 ### Request Body:
 
@@ -683,9 +683,9 @@ https://localhost/b-net/api/v1/machine/threads?machine_id=M001&needle_number=2
 
 ### Request Headers:
 
-| Header        | Description                        |
-| :------------ | :--------------------------------- |
-| authorization | API key set in B-NET Config.       |
+| Header        | Description                                    |
+| :------------ | :--------------------------------------------- |
+| authorization | API key for authorization. Set in BNET Config. |
 
 ### Request Body:
 
