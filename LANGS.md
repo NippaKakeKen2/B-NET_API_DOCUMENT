@@ -1,7 +1,5 @@
-<!DOCTYPE html>
-<a align="center">
-    <img src="img/BNET-API-logo.png" style="margin-bottom:40px;">
-</a>
+{: align="center"}
+![BNET-API-logo](img/BNET-API-logo.png)
 
 # Languages
 * [English](en/)
