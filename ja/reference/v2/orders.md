@@ -136,6 +136,7 @@ https://localhost/b-net/api/v2/orders?orderID=CO&detail=full
 
 | Name            | Type    | Description                                                                                                                                                                         |
 | :-------------- | :------ | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| taskID          | String  | このアイテムの一意の名前 - 直接ダウンロードのバーコードIDです                                                                                                                                             |
 | detail          | String  | 返される情報の量を決定します。<br>・brief：TaskID、OrderID/LN、CustomerStatus、Qty、Due、BatchID<br>・status：TaskID、Status、Qty、QtyFinished、QtyDamaged<br>・full：完全な情報 |
 | orderID         | String  | 特定のオーダーIDでフィルタリングします                                                                                                                                             |
 | batchID         | String  | バッチのIDでフィルタリングします                                                                                                                                                   |
@@ -274,11 +275,11 @@ https://localhost/b-net/api/v2/orders?orderID=CO&detail=full
 
 {% api "オーダーの登録", method="POST", url="/orders" %}
 
-オーダーをBNETデータベース（t_orders）に登録します。
+オーダーをオーダーテーブル（t_orders）に登録します。
 
 ### 概要:
 
-このエンドポイントは、新しいオーダーのJSONリストをT_ORDERSデータベースに追加します。
+このエンドポイントは、新しいオーダーのJSONリストをオーダーテーブル（t_orders）に追加します。
 
 ### Request Headers:
 
@@ -515,15 +516,15 @@ https://localhost/b-net/api/v2/orders?orderID=CO&detail=full
 
 {% api "オーダーの削除", method="DELETE", url="/orders" %}
 
-T_ORDERSデータベースから1つ以上のオーダーを削除します。
+オーダーテーブル（t_orders）から1つ以上のオーダーデータを削除します。
 
 ### 概要:
 
-このエンドポイントは、BNET T_Ordersから1つ以上のオーダーエントリを削除します。
+このエンドポイントは、オーダーテーブル（t_orders）から1つ以上のオーダーデータを削除します。
 
 ### Example:
 
-**特定のオーダーリストを削除する**
+**特定のオーダーデータを削除する**
 
 ```
 https://localhost/b-net/api/v2/orders
@@ -534,9 +535,12 @@ https://localhost/b-net/api/v2/orders
 | Header           | Description                                   |
 | :--------------- | :-------------------------------------------- |
 | authorization    | B-NET Config で設定したAPIキー |
-| orderList        | 削除するオーダーIDの配列（例: ["CO-1001", "CO-1002"]）|
+| orderID          | 削除するオーダーID（例: CO-1001）|
+| taskID           | 削除するタスクID（例: CO-1001_1）|
 | batchID          | 削除するバッチID（例: 2024-01-16 Wave 01）     |
+| status           | 削除するステータス（例: C-完了、F-終了、X-キャンセル、P-保留、H-保持）     |
 
+※異なる削除アイテムを同時に指定した時は、全てのアイテムが合致するオーダーデータが削除されます。
 ### Response:
 
 ```json
