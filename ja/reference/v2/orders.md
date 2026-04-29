@@ -656,3 +656,95 @@ https://localhost/b-net/api/v2/orders/file-validation?designFilename=Test
  
 {% endapi %}
  
+ {% api "柄ファイルサムネイル画像の生成", method="POST", url="/orders/image" %}
+ 
+オーダーの柄ファイルからサムネイル画像を生成します。
+ 
+### 概要:
+ 
+このエンドポイントは、フィルター条件に一致するオーダーテーブル（t_orders）の各レコードについて、既に検証済みの柄ファイル（`validDesignPath`が存在するもの）からサムネイル画像（PNG形式）を生成し、指定されたディレクトリに保存します。
+ 
+生成されるサムネイル画像は`{taskID}.png`の形式で`design-thumbnails`ディレクトリに保存されます。
+ 
+### Example:
+ 
+**特定のタスクIDの柄ファイルからサムネイルを生成する**
+ 
+```
+https://localhost/b-net/api/v2/orders/image?taskID=CO-1001_1
+```
+ 
+**特定のバッチのすべての柄ファイルからサムネイルを生成する**
+ 
+```
+https://localhost/b-net/api/v2/orders/image?batchID=2024-01-16%20Wave%2001
+```
+ 
+**特定のオーダーIDのサムネイルを生成する**
+ 
+```
+https://localhost/b-net/api/v2/orders/image?orderID=CO-1001
+```
+ 
+### Query Parameters:
+ 
+| Name    | Type   | Description                                     |
+| :------ | :----- | :---------------------------------------------- |
+| taskID  | String | 特定のタスクIDでフィルタリングします            |
+| orderID | String | 特定のオーダーIDでフィルタリングします          |
+| batchID | String | バッチIDでフィルタリングします                  |
+ 
+### Request Headers:
+ 
+| Header        | Description                    |
+| :------------ | :----------------------------- |
+| authorization | B-NET Config で設定したAPIキー |
+ 
+### Response:
+ 
+```json
+{
+  "result": "SUCCESS"
+}
+```
+ 
+### Response Headers:
+ 
+| Header          | Description                    |
+| :-------------- | :----------------------------- |
+| X-Total-Records | 処理対象の総レコード数         |
+ 
+### 処理対象条件:
+ 
+サムネイル生成の対象となるのは、以下の条件を満たすオーダーです：
+ 
+- `validDesignPath`が存在する（`null`でない）
+- 指定されたフィルターパラメータ（`taskID`、`orderID`、`batchID`）に一致する
+ 
+### 生成ファイル:
+ 
+| 項目           | 説明                                                    |
+| :------------- | :------------------------------------------------------ |
+| ファイル名     | `{taskID}.png`                                          |
+| 保存場所       | `design-thumbnails`ディレクトリ                         |
+| ファイル形式   | PNG画像                                                 |
+| 生成元         | `validDesignPath`配列の最初の柄ファイルパス             |
+ 
+### 注意事項:
+ 
+- このエンドポイントは、事前に`PUT /orders/file-validation`によって`validDesignPath`が設定されたオーダーのみを対象とします
+- 既存のサムネイルファイルがある場合は上書きされます
+- 柄ファイルが見つからない場合やアクセスできない場合は、エラーが返されます
+ 
+### Errors:
+ 
+| Code | Description                    |
+| :--- | :----------------------------- |
+| 204  | コンテンツなし                 |
+| 400  | 不正なリクエスト               |
+| 401  | 認証エラー                     |
+| 404  | リソースが見つかりません       |
+| 409  | リソースの競合                 |
+| 503  | サービス利用不可               |
+ 
+{% endapi %}
