@@ -562,3 +562,97 @@ https://localhost/b-net/api/v2/orders
 | 503  | サービス利用不可               |
 
 {% endapi %}
+
+{% api "柄ファイルの検証", method="PUT", url="/orders/file-validation" %}
+ 
+オーダーの柄ファイルの存在を検証し、状態を更新します。
+ 
+### 概要:
+ 
+このエンドポイントは、フィルター条件に一致するオーダーテーブル（t_orders）の各レコードについて、柄ファイル（designFilename）が実際にファイルシステム上に存在するかを検索し、その結果に基づいて`designFileStatus`および関連するデザイン情報を更新します。
+ 
+検索結果に応じて以下のように`designFileStatus`が更新されます：
+ 
+- ファイルが見つからない場合：`N`（未検出）に設定し、`validDesignPath`を`null`にクリアします
+- ファイルが1件のみ見つかった場合：`Y`（一致）に設定し、`validDesignPath`、`colors`、`stops`、`stitches`、`width`、`height`を更新します
+- ファイルが複数件見つかった場合：`M`（複数該当）に設定し、上記項目を更新します
+ 
+### Example:
+ 
+**特定のタスクIDの柄ファイルを検証する**
+ 
+```
+https://localhost/b-net/api/v2/orders/file-validation?taskID=CO-1001_1
+```
+ 
+**特定のバッチの柄ファイルを検証する**
+ 
+```
+https://localhost/b-net/api/v2/orders/file-validation?batchID=2024-01-16%20Wave%2001
+```
+ 
+**特定の柄ファイル名を指定して検証する**
+ 
+```
+https://localhost/b-net/api/v2/orders/file-validation?designFilename=Test
+```
+ 
+### Query Parameters:
+ 
+| Name           | Type   | Description                                                                                                                            |
+| :------------- | :----- | :------------------------------------------------------------------------------------------------------------------------------------- |
+| taskID         | String | 特定のタスクIDでフィルタリングします                                                                                                   |
+| orderID        | String | 特定のオーダーIDでフィルタリングします                                                                                                 |
+| designFilename | String | 柄ファイル名でフィルタリングします                                                                                                     |
+| batchID        | String | バッチIDでフィルタリングします                                                                                                         |
+| orderStatus   | String | 対象とするオーダー状態。<br>・`A`（デフォルト）：`status`が`H`または`R`のオーダー<br>・`R`：`status`が`R`のオーダーのみ                |
+| fileStatus     | String | 対象とする柄ファイル状態。<br>・`M`（デフォルト）：`designFileStatus`が`null`、`N`、`M`、`D`のオーダー<br>・`A`：すべてのファイル状態 |
+ 
+### Request Headers:
+ 
+| Header        | Description                    |
+| :------------ | :----------------------------- |
+| authorization | B-NET Config で設定したAPIキー |
+ 
+### Response:
+ 
+```json
+{
+  "result": "SUCCESS"
+}
+```
+ 
+### Response Headers:
+ 
+| Header          | Description              |
+| :-------------- | :----------------------- |
+| X-Total-Records | 処理対象の総レコード数   |
+ 
+### Updated Fields:
+ 
+検証処理によって、t_orders内の対象レコードで以下のフィールドが更新されます。
+ 
+| Name                 | Type    | Description                                                          |
+| :------------------- | :------ | :------------------------------------------------------------------- |
+| designFileStatus     | String  | 柄ファイル状態（`N`：未検出、`Y`：1件一致、`M`：複数件一致）       |
+| designFileStatusDate | String  | 柄ファイル状態の更新日時                                             |
+| validDesignPath      | Array   | 見つかった柄ファイルの実パスの配列（未検出時は`null`）              |
+| colors               | Integer | 色数（ファイルが見つかった場合のみ更新）                             |
+| stops                | Integer | ストップ数（ファイルが見つかった場合のみ更新）                       |
+| stitches             | Integer | ステッチ数（ファイルが見つかった場合のみ更新）                       |
+| width                | Integer | 幅（ファイルが見つかった場合のみ更新）                               |
+| height               | Integer | 高さ（ファイルが見つかった場合のみ更新）                             |
+ 
+### Errors:
+ 
+| Code | Description                    |
+| :--- | :----------------------------- |
+| 204  | コンテンツなし                 |
+| 400  | 不正なリクエスト               |
+| 401  | 認証エラー                     |
+| 404  | リソースが見つかりません       |
+| 409  | リソースの競合                 |
+| 503  | サービス利用不可               |
+ 
+{% endapi %}
+ 
