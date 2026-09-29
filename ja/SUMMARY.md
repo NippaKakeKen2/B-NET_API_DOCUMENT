@@ -14,3 +14,4 @@
 * B-NET API v2
   * [History (履歴)](reference/v2/history.md)
   * [Orders (オーダー)](reference/v2/orders.md)
+  * [Machine (ミシン)](reference/v2/machine.md)
