@@ -14,3 +14,4 @@
 * B-NET API v2
   * [History](reference/v2/history.md)
   * [Orders](reference/v2/orders.md)
+  * [Machine](reference/v2/machine.md)
