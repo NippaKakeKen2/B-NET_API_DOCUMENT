@@ -1,13 +1,13 @@
-# Machine（ミシン）
+# Machine
 
-## スケジュール
+## Schedule
 
 {% api "Get the schedule", method="GET", url="/machine/schedule-items" %}
 
 Retrieves the unsent schedules for the specified embroidery machine.
 
 
-### 概要:
+### Overview:
 
 This endpoint returns the list of unsent schedules (design files) currently set on the specified embroidery machine, along with hash values representing their contents.
 
@@ -85,7 +85,7 @@ https://localhost/b-net/api/v2/machine/schedule-items?machineID=KS001%2B002
 
 Replaces the unsent schedule for the specified machine with the submitted schedule.
 
-### 概要:
+### Overview:
 
 This endpoint replaces the unsent schedule for the specified machine with the contents and order of the `schedule` array in the request body. It is used to reorder, add, or delete designs.
 
@@ -162,7 +162,7 @@ https://localhost/b-net/api/v2/machine/schedule-items?machineID=KS001&scheduleHa
 
 Removes a design from the unsent schedule of the specified machine.
 
-### 概要:
+### Overview:
 
 This endpoint removes designs matching the specified condition from the unsent schedule of the specified machine. Exactly one of the following deletion criteria must be specified: `all`, `ordinal`, `filePath`, or `fileName`.
 
