@@ -1,6 +1,115 @@
 # Orders
 
 
+{% api "Retrieving order status (deprecated)", method="GET", url="/orders/status" %}
+
+Retrieves the order status. This endpoint is deprecated.
+
+### Overview:
+
+This endpoint returns an array of order data from the order table (t_orders) that matches the filter parameters.
+
+**Note: This endpoint is deprecated**
+
+### Example:
+
+**Retrieve the order status for a specific order ID**
+
+```
+https://localhost/b-net/api/v2/orders/status?orderID=Testfile.U01
+```
+
+**Retrieve order statuses for orders with delivery dates falling within a specific period**
+
+```
+https://localhost/b-net/api/v2/orders/status?dueStartDateTime=2023-11-01T09:12:28Z&dueEndDateTime=2023-11-30T09:12:28Z
+```
+
+### Query Parameters:
+
+| Name            | Type    | Description                                                                                                       |
+| :-------------- | :------ | :---------------------------------------------------------------------------------------------------------------- |
+| orderID         | String  | Filter by specific order ID.                                                                           |
+| batchID         | String  | Filter by batch ID.                                                                                 |
+| customerNo      | String  | Filter by specific customer ID.                                                                             |
+| status          | String  | Order status filter: 'all' (default), 'unfinished', 'C' (completed).                                       |
+| dueStartDateTime| String  | Start date: filters orders with due dates after the specified date.                                             |
+| dueEndDateTime  | String  | End date: filters orders with due dates before the specified date.                                             |
+| pageSize        | Integer | Number of results per page.                                                                                         |
+| pageOffset      | Integer | Page offset.                                                                                              |
+| sortOrder       | String  | Sort order of results ("asc" or "desc")                                                                          |
+
+### Request Headers:
+
+| Header        | Description                    |
+| :------------ | :----------------------------- |
+| authorization | API key configured in B-NET Config |
+
+### Response:
+
+```json
+[
+  {
+    "taskID": "CO2",
+    "orderID": "CO-1002",
+    "orderLN": "1",
+    "customerNo": "C-1001",
+    "customerName": "Barudan America, Inc.",
+    "department": "monogramming",
+    "status": "R",
+    "qty": "1",
+    "due": "2024-02-24 02:32:28",
+    "comboType": "P",
+    "parentTaskID": "Batch0001",
+    "batchID": "2024-01-16 Wave 01"
+  },
+  {
+    "taskID": "CO9",
+    "orderID": "CO9",
+    "orderLN": "1",
+    "customerNo": "C-1001",
+    "customerName": "Barudan America, Inc.",
+    "department": "monogramming",
+    "status": "R",
+    "qty": "100",
+    "due": "2024-02-24 02:32:28",
+    "comboType": "P",
+    "parentTaskID": "Batch0001",
+    "batchID": "2024-01-16 Wave 01"
+  }
+]
+```
+
+### Fields:
+
+| Name             | Type    | Description                                |
+| :--------------- | :------ | :----------------------------------------- |
+| taskID           | String  | Item barcode ID (primary key)           |
+| orderID          | String  | Order ID                                 |
+| orderLN          | String  | Line number                                 |
+| orderLNLoc       | String  | Location                               |
+| batchID          | String  | Batch ID                                   |
+| status           | String  | Order status                               |
+| designFileStatus | String  | file vaildation status                     |
+| orderDate        | String  | Order date                                     |
+| dueDate          | String  | Deadline                                       |
+| qty              | String  | Total Quantity to sew                                       |
+| qtyFinished      | String  | Completed quantity                                   |
+| qtyDamaged       | String | Damaged quantity                                   |
+
+### Errors:
+
+| Code | Description                    |
+| :--- | :----------------------------- |
+| 204  | No content                     |
+| 400  | Bad request                    |
+| 401  | Authentication error           |
+| 404  | Resource not found             |
+| 409  | Resource conflict              |
+| 503  | Service unavailable            |
+
+{% endapi %}
+
 {% api "Order Information Retrieval", method="GET", url="/orders" %}
 
 Retrieves order information.
@@ -126,7 +235,7 @@ Depending on the detail level returned, the following fields may be included:
 | designFilename     | String  | Pattern file name (on server)              |
 | designFolder       | String  | Subfolder to search in                     |
 | designPath         | String  | Where the file file is located on the server, when file is validated. |
-| designFolderAlias  | String  | Folder Alias (set in BNET CONFIG.          |
+| designFolderAlias  | String  | Folder Alias set in BNET CONFIG.          |
 | designFileStatus   | String  | file vaildation status                     |
 | designFileStatusDate | String | Date validated                            |
 | colorway           | String  | ID of colorway to use (future)             |
@@ -260,7 +369,7 @@ Add a list of orders to the t_orders table.  This is a JSON array of one or more
 | designFilename     | String  | Pattern file name (on server)              |
 | designFolder       | String  | Subfolder to search in                     |
 | designPath         | String  | Where the file file is located on the server, when file is validated. |
-| designFolderAlias  | String  | Folder Alias (set in BNET CONFIG.          |
+| designFolderAlias  | String  | Folder Alias set in BNET CONFIG.          |
 | designFileStatus   | String  | file vaildation status                     |
 | designFileStatusDate | String | Date validated                            |
 | colorway           | String  | ID of colorway to use (future)             |
@@ -359,7 +468,7 @@ This endpoint is used to modify data in T_ORDERS. Typical uses are to cancel an 
 | designFilename     | String  | Pattern file name (on server)              |
 | designFolder       | String  | Subfolder to search in                     |
 | designPath         | String  | Where the file file is located on the server, when file is validated. |
-| designFolderAlias  | String  | Folder Alias (set in BNET CONFIG.          |
+| designFolderAlias  | String  | Folder Alias set in BNET CONFIG.          |
 | designFileStatus   | String  | file vaildation status                     |
 | designFileStatusDate | String | Date validated                            |
 | colorway           | String  | ID of colorway to use (future)             |
