@@ -1,7 +1,7 @@
 # Orders
 
 
-{% api "Retrieving order status (deprecated)", method="GET", url="/orders/status" %}
+<!-- {% api "Retrieving order status (deprecated)", method="GET", url="/orders/status" %}
 
 Retrieves the order status. This endpoint is deprecated.
 
@@ -108,7 +108,7 @@ https://localhost/b-net/api/v2/orders/status?dueStartDateTime=2023-11-01T09:12:2
 | 409  | Resource conflict              |
 | 503  | Service unavailable            |
 
-{% endapi %}
+{% endapi %} -->
 
 {% api "Order Information Retrieval", method="GET", url="/orders" %}
 
