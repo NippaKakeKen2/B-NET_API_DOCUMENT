@@ -454,3 +454,96 @@ https://localhost/b-net/api/v2/orders
 | 503  | Service unavailable            |
 
 {% endapi %}
+
+{% api "Verification of pattern files", method="PUT", url="/orders/file-validation" %}
+
+Verify the existence of the requested pattern file and update its status.
+
+### Overview:
+
+For each record in the order table (t_orders) that matches the filter criteria, this endpoint checks whether the design file (designFilename) actually exists on the file system, and updates the `designFileStatus` and related design information based on the result.
+
+The `designFileStatus` is updated as follows, based on the search results：
+
+- If the file is not found: set to `N` (not detected) and clear `validDesignPath` to `null`.
+- If only one file is found: set to `Y` (match) and update `validDesignPath`, `colors`, `stops`, `stitches`, `width`, and `height`.
+- If multiple files are found: set to `M` (multiple matches) and update the aforementioned fields.
+
+### Example:
+
+**Validate the pattern file for a specific task ID**
+ 
+```
+https://localhost/b-net/api/v2/orders/file-validation?taskID=CO-1001_1
+```
+ 
+**Verify the pattern files for a specific batch**
+ 
+```
+https://localhost/b-net/api/v2/orders/file-validation?batchID=2024-01-16%20Wave%2001
+```
+ 
+**Verify by specifying a particular pattern filename**
+ 
+```
+https://localhost/b-net/api/v2/orders/file-validation?designFilename=Test
+```
+
+### Query Parameters:
+
+| Name           | Type   | Description                                                                                                                            |
+| :------------- | :----- | :------------------------------------------------------------------------------------------------------------------------------------- |
+| taskID         | String | Filter by a specific task ID                                                                                                   |
+| orderID        | String | Filter by a specific order ID                                                                                                 |
+| designFilename | String | Filter by pattern filename                                                                                                     |
+| batchID        | String | Filter by batch ID                                                                                                         |
+| orderStatus   | String | Target order status:<br>・`A` (default): Orders with a `status` of `H` or `R`<br>・`R`: Orders with a `status` of `R` only                |
+| fileStatus     | String | Target pattern file status.<br>・`M` (default): Includes `designFileStatus` values ​​of `null`, `N`, `M`, and `D`.<br>・`A`: All file statuses |
+
+### Request Headers:
+ 
+| Header        | Description                    |
+| :------------ | :----------------------------- |
+| authorization | API key configured in B-NET Config |
+
+### Response:
+ 
+```json
+{
+  "result": "SUCCESS"
+}
+```
+
+### Response Headers:
+ 
+| Header          | Description              |
+| :-------------- | :----------------------- |
+| X-Total-Records | Total number of records to be processed   |
+
+### Updated Fields:
+ 
+The validation process updates the following fields in the target records within t_orders.
+ 
+| Name                 | Type    | Description                                                          |
+| :------------------- | :------ | :------------------------------------------------------------------- |
+| designFileStatus     | String  | Pattern file status (`N`: Not detected, `Y`: 1 match, `M`: Multiple matches)       |
+| designFileStatusDate | String  | Last modified date/time of the pattern file                                             |
+| validDesignPath      | Array   | An array of the actual paths to the discovered pattern files (`null` if none are found)              |
+| colors               | Integer | Number of colors (updated only if the file is found)                             |
+| stops                | Integer | Stop count (updated only when a file is found)                       |
+| stitches             | Integer | Stitch count (updated only if the file is found)                       |
+| width                | Integer | Width (updated only if the file is found)                               |
+| height               | Integer | Height (updated only if the file is found)                             |
+
+### Errors:
+ 
+| Code | Description                    |
+| :--- | :----------------------------- |
+| 204  | No content                     |
+| 400  | Bad request                    |
+| 401  | Authentication error           |
+| 404  | Resource not found             |
+| 409  | Resource conflict              |
+| 503  | Service unavailable            |
+
+{% endapi %}
