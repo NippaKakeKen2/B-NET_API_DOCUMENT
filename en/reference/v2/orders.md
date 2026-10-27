@@ -547,3 +547,96 @@ The validation process updates the following fields in the target records within
 | 503  | Service unavailable            |
 
 {% endapi %}
+
+ {% api "Generating thumbnail images for pattern files", method="POST", url="/orders/image" %}
+ 
+Generates thumbnail images from the pattern files in an order.
+
+### Overview:
+ 
+For each record in the order table (t_orders) that matches the filter criteria, this endpoint generates a thumbnail image (in PNG format) from a previously verified design file (i.e., one for which `validDesignPath` exists) and saves it to the specified directory.
+ 
+The generated thumbnail images are saved in the `design-thumbnails` directory in the format `{taskID}.png`.
+
+### Example:
+ 
+**Generate a thumbnail from the pattern file associated with a specific task ID**
+ 
+```
+https://localhost/b-net/api/v2/orders/image?taskID=CO-1001_1
+```
+ 
+**Generate thumbnails from all pattern files in a specific batch**
+ 
+```
+https://localhost/b-net/api/v2/orders/image?batchID=2024-01-16%20Wave%2001
+```
+ 
+**Generate a thumbnail for a specific order ID**
+ 
+```
+https://localhost/b-net/api/v2/orders/image?orderID=CO-1001
+```
+
+### Query Parameters:
+ 
+| Name    | Type   | Description                                     |
+| :------ | :----- | :---------------------------------------------- |
+| taskID  | String | Filter by a specific task ID            |
+| orderID | String | Filter by a specific order ID          |
+| batchID | String | Filter by batch ID                  |
+
+### Request Headers:
+ 
+| Header        | Description                    |
+| :------------ | :----------------------------- |
+| authorization | API key configured in B-NET Config |
+
+### Response:
+ 
+```json
+{
+  "result": "SUCCESS"
+}
+```
+
+### Response Headers:
+ 
+| Header          | Description                    |
+| :-------------- | :----------------------------- |
+| X-Total-Records | Total number of records to be processed         |
+
+### Processing criteria:
+ 
+Orders that meet the following criteria are eligible for thumbnail generation.：
+ 
+- `validDesignPath` exists (is not `null`)
+- Matches the specified filter parameters (`taskID`, `orderID`, `batchID`)
+
+### Generated file:
+ 
+| Item           | Description                                                    |
+| :------------- | :------------------------------------------------------ |
+| File name     | `{taskID}.png`                                          |
+| Save location | `design-thumbnails` directory                         |
+| File format   | PNG image                                                 |
+| Origin        | The first pattern file path in the `validDesignPath` array             |
+
+### Precautions:
+ 
+- This endpoint applies only to orders for which a `validDesignPath` has been set in advance via `PUT /orders/file-validation`.
+- If an existing thumbnail file is present, it will be overwritten
+- If the pattern file cannot be found or accessed, an error is returned
+
+### Errors:
+ 
+| Code | Description                    |
+| :--- | :----------------------------- |
+| 204  | No content                     |
+| 400  | Bad request                    |
+| 401  | Authentication error           |
+| 404  | Resource not found             |
+| 409  | Resource conflict              |
+| 503  | Service unavailable            |
+ 
+{% endapi %}
